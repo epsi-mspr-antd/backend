@@ -18,7 +18,7 @@ model User {
   roles     Role[]
   addresses Address[]
   plants    Plant[]
-  guards    PlantGuard[]
+  guardians PlantGuardian[]
   tips      Tip[]
   session   Session?
 
@@ -74,7 +74,7 @@ model Plant {
   id        Int      @id @default(autoincrement())
   name      String
 
-  guards    PlantGuard[]
+  guardians PlantGuardian[]
   photos    Photo[]
   tips      Tip[]
 
@@ -111,7 +111,7 @@ model PlantSpecies {
   @@map("plant_species")
 }
 
-model PlantGuard {
+model PlantGuardian {
   id        Int      @id @default(autoincrement())
   from      DateTime
   to        DateTime
@@ -121,7 +121,7 @@ model PlantGuard {
   guardId   Int
   guard     User     @relation(fields: [guardId], references: [id])
 
-  @@map("plant_guard")
+  @@map("plant_guardian")
 }
 
 model Photo {
