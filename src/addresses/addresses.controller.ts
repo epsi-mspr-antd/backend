@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
 import { AddressService } from './addresses.service';
-import { CreateAddressDto, ReturnAddressDto } from './dto';
+import { CreateAddressDto, ReturnAddressDto, UpdateAddressDto } from './dto';
 import { GetCurrentUserId } from 'src/auth/common/decorators';
 
 @Controller('addresses')
@@ -19,9 +19,9 @@ export class AddressController {
   async update(
     @GetCurrentUserId() userId: number,
     @Param('id') id: string,
-    @Body() createAddressDto: CreateAddressDto,
+    @Body() updateAddressDto: UpdateAddressDto,
   ): Promise<ReturnAddressDto> {
-    return await this.addressesService.update(userId, +id, createAddressDto);
+    return await this.addressesService.update(userId, +id, updateAddressDto);
   }
 
   @Delete(':id')

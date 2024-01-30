@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateAddressDto, ReturnAddressDto } from './dto';
+import { CreateAddressDto, ReturnAddressDto, UpdateAddressDto } from './dto';
 
 export const addressesSelect = {
   id: true,
@@ -33,14 +33,14 @@ export class AddressService {
   async update(
     userId: number,
     id: number,
-    createAddressDto: CreateAddressDto,
+    updateAddressDto: UpdateAddressDto,
   ): Promise<ReturnAddressDto> {
     await this.isAddressOwner(userId, id);
 
     return await this.prismaService.address.update({
       where: { id },
       data: {
-        ...createAddressDto,
+        ...updateAddressDto,
         user: {
           connect: {
             id: userId,
