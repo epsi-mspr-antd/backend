@@ -1,12 +1,12 @@
 import { Body, Controller, Param, Patch, Get } from '@nestjs/common';
 import { GetCurrentUserId } from 'src/auth/common/decorators';
-import { UsersService } from './user.service';
+import { UserService } from './user.service';
 import { UpdateUserDto } from './dto';
 import { UserRO, UsersRO } from './types';
 
 @Controller('users')
-export class UsersController {
-  constructor(private readonly userService: UsersService) {}
+export class UserController {
+  constructor(private readonly userService: UserService) {}
 
   @Get()
   findAll(): Promise<UsersRO> {

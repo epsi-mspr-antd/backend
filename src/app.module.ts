@@ -2,18 +2,12 @@ import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AtGuard, PermissionsGuard } from './auth/common/guards';
-import { UsersModule } from './user/user.module';
+import { UserModule } from './user/user.module';
 import { AddressModule } from './address/address.module';
-import { SessionsModule } from './session/session.module';
+import { SessionModule } from './session/session.module';
 
 @Module({
-  imports: [
-    AuthModule,
-    PrismaModule,
-    UsersModule,
-    AddressModule,
-    SessionsModule,
-  ],
+  imports: [AuthModule, PrismaModule, UserModule, AddressModule, SessionModule],
   providers: [
     {
       provide: 'APP_GUARD',

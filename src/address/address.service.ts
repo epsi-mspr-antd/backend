@@ -10,7 +10,6 @@ const addressSelect = {
   city: true,
   longitude: true,
   latitude: true,
-  updatedAt: true,
 };
 
 @Injectable()

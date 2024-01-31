@@ -4,7 +4,7 @@ import { AuthDto } from './dto';
 import * as bcrypt from 'bcrypt';
 import { AccessTokenRO, TokensRO } from './types';
 import { JwtService } from '@nestjs/jwt';
-import { SessionsService } from 'src/session/session.service';
+import { SessionService } from 'src/session/session.service';
 import { Roles } from 'src/user/types';
 
 export const authSelect = {
@@ -16,7 +16,7 @@ export class AuthService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly jwtService: JwtService,
-    private readonly sessionsServices: SessionsService,
+    private readonly sessionsServices: SessionService,
   ) {}
 
   async signup(authDto: AuthDto): Promise<TokensRO> {

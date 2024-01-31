@@ -15,7 +15,7 @@ const selectUser = {
 };
 
 @Injectable()
-export class UsersService {
+export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async findAll(): Promise<UsersRO> {
