@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Session } from './types';
 
 @Injectable()
 export class SessionsService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findByUserId(userId: number) {
+  async findByUserId(userId: number): Promise<Session> {
     const sessions = await this.prismaService.session.findUnique({
       where: { userId },
       select: {
@@ -24,7 +25,7 @@ export class SessionsService {
     });
   }
 
-  async delete(userId: number) {
+  async delete(userId: number): Promise<void> {
     await this.prismaService.session.delete({ where: { userId } });
   }
 }

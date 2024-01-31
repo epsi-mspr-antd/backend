@@ -1,4 +1,4 @@
-import { Roles } from '../../src/users/types/roles.type';
+import { Roles } from '../../src/user/types/roles.type';
 
 export const users = [
   {

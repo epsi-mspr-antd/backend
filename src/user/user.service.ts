@@ -2,54 +2,69 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UpdateUserDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
+import { UserRO, UsersRO } from './types';
 
-export const usersSelect = {
+const selectUser = {
   id: true,
   email: true,
-  roles: true,
+  roles: {
+    select: {
+      name: true,
+    },
+  },
 };
 
 @Injectable()
 export class UsersService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findAll() {
+  async findAll(): Promise<UsersRO> {
     const users = await this.prismaService.user.findMany({
-      select: usersSelect,
+      select: selectUser,
     });
 
-    return users.map((user) => ({
-      ...user,
-      roles: user.roles.map((role) => role.name),
-    }));
+    return {
+      data: users.map((user) => ({
+        ...user,
+        roles: user.roles.map((role) => role.name),
+      })),
+    };
   }
 
-  async findOne(userId: number) {
+  async findOne(userId: number): Promise<UserRO> {
     const user = await this.prismaService.user.findUnique({
       where: { id: userId },
-      select: usersSelect,
+      select: selectUser,
     });
 
     const roles = user.roles.map((role) => role.name);
 
-    return { ...user, roles };
+    return { data: { ...user, roles } };
   }
 
-  async update(paramId: number, userId: number, updateUserDto: UpdateUserDto) {
+  async update(
+    paramId: number,
+    userId: number,
+    updateUserDto: UpdateUserDto,
+  ): Promise<UserRO> {
     await this.isUserOwner(userId, paramId);
 
     if (updateUserDto.password) {
       updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10);
     }
 
-    await this.prismaService.user.update({
+    const user = await this.prismaService.user.update({
       where: { id: userId },
       data: updateUserDto,
-      select: usersSelect,
+      select: selectUser,
     });
+
+    const roles = user.roles.map((role) => role.name);
+
+    return { data: { ...user, roles } };
   }
 
-  async delete(paramId: number, userId: number) {
+  async delete(paramId: number, userId: number): Promise<void> {
     await this.isUserOwner(userId, paramId);
 
     await this.prismaService.user.delete({ where: { id: userId } });

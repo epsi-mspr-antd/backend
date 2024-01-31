@@ -2,10 +2,10 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthDto } from './dto';
 import * as bcrypt from 'bcrypt';
-import { AccessToken, Tokens } from './types';
+import { AccessTokenRO, TokensRO } from './types';
 import { JwtService } from '@nestjs/jwt';
-import { SessionsService } from 'src/sessions/sessions.service';
-import { Roles } from 'src/users/types';
+import { SessionsService } from 'src/session/session.service';
+import { Roles } from 'src/user/types';
 
 export const authSelect = {
   name: true,
@@ -19,7 +19,7 @@ export class AuthService {
     private readonly sessionsServices: SessionsService,
   ) {}
 
-  async signup(authDto: AuthDto): Promise<Tokens> {
+  async signup(authDto: AuthDto): Promise<TokensRO> {
     const findUser = await this.prismaService.user.findUnique({
       where: {
         email: authDto.email,
@@ -50,16 +50,18 @@ export class AuthService {
     await this.updateRtHash(newUser.id, refresh_token);
 
     return {
-      access_token: await this.generateAtToken(
-        newUser.id,
-        newUser.email,
-        userRoles,
-      ),
-      refresh_token,
+      data: {
+        access_token: await this.generateAtToken(
+          newUser.id,
+          newUser.email,
+          userRoles,
+        ),
+        refresh_token,
+      },
     };
   }
 
-  async signin(authDto: AuthDto): Promise<Tokens> {
+  async signin(authDto: AuthDto): Promise<TokensRO> {
     const user = await this.prismaService.user.findUnique({
       where: {
         email: authDto.email,
@@ -85,16 +87,22 @@ export class AuthService {
     const userRoles = user.roles.map((role) => role.name);
 
     return {
-      access_token: await this.generateAtToken(user.id, user.email, userRoles),
-      refresh_token,
+      data: {
+        access_token: await this.generateAtToken(
+          user.id,
+          user.email,
+          userRoles,
+        ),
+        refresh_token,
+      },
     };
   }
 
-  async logout(userId: number) {
+  async logout(userId: number): Promise<void> {
     await this.sessionsServices.delete(userId);
   }
 
-  async refreshTokens(userId: number, rt: string): Promise<AccessToken> {
+  async refreshTokens(userId: number, rt: string): Promise<AccessTokenRO> {
     const user = await this.prismaService.user.findUnique({
       where: {
         id: userId,
@@ -117,11 +125,17 @@ export class AuthService {
     const userRoles = user.roles.map((role) => role.name);
 
     return {
-      access_token: await this.generateAtToken(user.id, user.email, userRoles),
+      data: {
+        access_token: await this.generateAtToken(
+          user.id,
+          user.email,
+          userRoles,
+        ),
+      },
     };
   }
 
-  private async updateRtHash(userId: number, rt: string) {
+  private async updateRtHash(userId: number, rt: string): Promise<void> {
     const hash = await this.hashData(rt);
     await this.sessionsServices.findOrCreate(userId, hash);
   }

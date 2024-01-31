@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
-import { AccessToken, Tokens } from './types';
+import { AccessTokenRO, TokensRO } from './types';
 import { RtGuard } from './common/guards';
 import { GetCurrentUser, GetCurrentUserId, Public } from './common/decorators';
 
@@ -19,20 +19,20 @@ export class AuthController {
   @Public()
   @Post('signup')
   @HttpCode(HttpStatus.CREATED)
-  signup(@Body() authDto: AuthDto): Promise<Tokens> {
+  signup(@Body() authDto: AuthDto): Promise<TokensRO> {
     return this.authService.signup(authDto);
   }
 
   @Public()
   @Post('signin')
   @HttpCode(HttpStatus.OK)
-  signin(@Body() authDto: AuthDto): Promise<Tokens> {
+  signin(@Body() authDto: AuthDto): Promise<TokensRO> {
     return this.authService.signin(authDto);
   }
 
   @Post('logout')
   @HttpCode(HttpStatus.OK)
-  logout(@GetCurrentUserId() userId: number) {
+  logout(@GetCurrentUserId() userId: number): Promise<void> {
     return this.authService.logout(userId);
   }
 
@@ -43,7 +43,7 @@ export class AuthController {
   refreshTokens(
     @GetCurrentUserId() userId: number,
     @GetCurrentUser('refreshToken') refreshToken: string,
-  ): Promise<AccessToken> {
+  ): Promise<AccessTokenRO> {
     return this.authService.refreshTokens(userId, refreshToken);
   }
 }

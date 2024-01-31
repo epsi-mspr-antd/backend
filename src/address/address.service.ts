@@ -1,12 +1,16 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateAddressDto, ReturnAddressDto, UpdateAddressDto } from './dto';
+import { CreateAddressDto, UpdateAddressDto } from './dto';
+import { AddressRO } from './types';
 
-export const addressesSelect = {
+const addressSelect = {
   id: true,
   street: true,
-  city: true,
   zip: true,
+  city: true,
+  longitude: true,
+  latitude: true,
+  updatedAt: true,
 };
 
 @Injectable()
@@ -16,8 +20,8 @@ export class AddressService {
   async create(
     userId: number,
     createAddressDto: CreateAddressDto,
-  ): Promise<ReturnAddressDto> {
-    return await this.prismaService.address.create({
+  ): Promise<AddressRO> {
+    const address = await this.prismaService.address.create({
       data: {
         ...createAddressDto,
         user: {
@@ -26,18 +30,20 @@ export class AddressService {
           },
         },
       },
-      select: addressesSelect,
+      select: addressSelect,
     });
+
+    return { data: address };
   }
 
   async update(
     userId: number,
     id: number,
     updateAddressDto: UpdateAddressDto,
-  ): Promise<ReturnAddressDto> {
+  ): Promise<AddressRO> {
     await this.isAddressOwner(userId, id);
 
-    return await this.prismaService.address.update({
+    const address = await this.prismaService.address.update({
       where: { id },
       data: {
         ...updateAddressDto,
@@ -47,8 +53,10 @@ export class AddressService {
           },
         },
       },
-      select: addressesSelect,
+      select: addressSelect,
     });
+
+    return { data: address };
   }
 
   async delete(userId: number, id: number): Promise<void> {
