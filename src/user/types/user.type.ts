@@ -1,15 +1,15 @@
-type User = {
+interface User {
   id: number;
 
   email: string;
 
   roles: string[];
-};
+}
 
-export type UserRO = {
+export interface UserRO {
   data: User;
-};
+}
 
-export type UsersRO = {
+export interface UsersRO {
   data: User[];
-};
+}

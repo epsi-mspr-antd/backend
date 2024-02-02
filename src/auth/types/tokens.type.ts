@@ -1,12 +1,12 @@
-export type AccessTokenRO = {
+export interface AccessTokenRO {
   data: {
     access_token: string;
   };
-};
+}
 
-export type TokensRO = {
+export interface TokensRO {
   data: {
     access_token: string;
     refresh_token: string;
   };
-};
+}

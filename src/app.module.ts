@@ -5,9 +5,11 @@ import { AtGuard, PermissionsGuard } from './auth/common/guards';
 import { UserModule } from './user/user.module';
 import { AddressModule } from './address/address.module';
 import { SessionModule } from './session/session.module';
+import { PlantSpeciesModule } from './plant-species/plant-species.module';
+import { PlantStatusModule } from './plant-status/plant-status.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, UserModule, AddressModule, SessionModule],
+  imports: [AuthModule, PrismaModule, UserModule, AddressModule, SessionModule, PlantSpeciesModule, PlantStatusModule],
   providers: [
     {
       provide: 'APP_GUARD',

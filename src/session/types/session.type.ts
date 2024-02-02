@@ -1,3 +1,3 @@
-export type Session = {
+export interface Session {
   token: string;
-};
+}

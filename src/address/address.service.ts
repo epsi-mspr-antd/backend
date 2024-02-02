@@ -3,7 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateAddressDto, UpdateAddressDto } from './dto';
 import { AddressRO } from './types';
 
-const addressSelect = {
+export const addressSelect = {
   id: true,
   street: true,
   zip: true,
@@ -66,11 +66,11 @@ export class AddressService {
 
   async isAddressOwner(userId: number, addressId: number): Promise<void> {
     const address = await this.prismaService.address.findUnique({
-      where: { id: addressId },
+      where: { id: addressId, userId },
       select: { userId: true },
     });
 
-    if (!address || address.userId !== userId) {
+    if (!address) {
       throw new UnauthorizedException('This address does not exist');
     }
   }
