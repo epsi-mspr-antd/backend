@@ -21,7 +21,7 @@ export class PlantController {
   async findUserPlants(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<PlantsRO> {
-    return await this.plantService.findAll(id);
+    return await this.plantService.findUserPlants(id);
   }
 
   @Post()

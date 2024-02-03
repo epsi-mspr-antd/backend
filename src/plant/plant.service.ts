@@ -19,7 +19,7 @@ export class PlantService {
     private readonly addressService: AddressService,
   ) {}
 
-  async findAll(userId: number): Promise<PlantsRO> {
+  async findUserPlants(userId: number): Promise<PlantsRO> {
     const plants = await this.prismaService.plant.findMany({
       where: { userId },
       select: plantSelect,

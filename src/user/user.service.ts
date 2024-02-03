@@ -4,7 +4,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { UserRO, UsersRO } from './types';
 
-const selectUser = {
+export const userSelect = {
   id: true,
   email: true,
   roles: {
@@ -20,7 +20,7 @@ export class UserService {
 
   async findAll(): Promise<UsersRO> {
     const users = await this.prismaService.user.findMany({
-      select: selectUser,
+      select: userSelect,
     });
 
     return {
@@ -34,7 +34,7 @@ export class UserService {
   async findOne(userId: number): Promise<UserRO> {
     const user = await this.prismaService.user.findUnique({
       where: { id: userId },
-      select: selectUser,
+      select: userSelect,
     });
 
     const roles = user.roles.map((role) => role.name);
@@ -56,7 +56,7 @@ export class UserService {
     const user = await this.prismaService.user.update({
       where: { id: userId },
       data: dto,
-      select: selectUser,
+      select: userSelect,
     });
 
     const roles = user.roles.map((role) => role.name);

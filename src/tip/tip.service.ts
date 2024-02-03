@@ -1,14 +1,16 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateTipDto, UpdateTipDto } from './dto';
-import { TipRO } from './types';
+import { TipRO, TipsRO } from './types';
 import { PlantService } from 'src/plant/plant.service';
+import { userSelect } from 'src/user/user.service';
 
 export const tipSelect = {
   id: true,
   description: true,
   createdAt: true,
   updatedAt: true,
+  user: { select: userSelect },
 };
 
 @Injectable()
@@ -17,6 +19,23 @@ export class TipService {
     private readonly prismaService: PrismaService,
     private readonly plantService: PlantService,
   ) {}
+
+  async findPlantTips(plantId: number): Promise<TipsRO> {
+    const plants = await this.prismaService.tip.findMany({
+      where: { plantId },
+      select: tipSelect,
+    });
+
+    return {
+      data: plants.map((plant) => ({
+        ...plant,
+        user: {
+          ...plant.user,
+          roles: plant.user.roles.map((role) => role.name),
+        },
+      })),
+    };
+  }
 
   async create(userId: number, dto: CreateTipDto): Promise<TipRO> {
     await this.plantService.isPlantExists(dto.plantId);

@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   ParseIntPipe,
   Patch,
@@ -10,13 +11,18 @@ import {
 import { TipService } from './tip.service';
 import { GetCurrentUserId, Permissions } from 'src/auth/common/decorators';
 import { CreateTipDto, UpdateTipDto } from './dto';
-import { TipRO } from './types';
+import { TipRO, TipsRO } from './types';
 import { Roles } from 'src/user/types';
 
 @Permissions(Roles.Botanist)
 @Controller('tips')
 export class TipController {
   constructor(private readonly tipService: TipService) {}
+
+  @Get('plant/:id')
+  async findPlantTips(@Param('id', ParseIntPipe) id: number): Promise<TipsRO> {
+    return await this.tipService.findPlantTips(id);
+  }
 
   @Post()
   async create(
