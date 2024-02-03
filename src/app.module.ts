@@ -7,9 +7,23 @@ import { AddressModule } from './address/address.module';
 import { SessionModule } from './session/session.module';
 import { PlantSpeciesModule } from './plant-species/plant-species.module';
 import { PlantStatusModule } from './plant-status/plant-status.module';
+import { PlantModule } from './plant/plant.module';
+import { MeModule } from './me/me.module';
+import { TipModule } from './tip/tip.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, UserModule, AddressModule, SessionModule, PlantSpeciesModule, PlantStatusModule],
+  imports: [
+    AuthModule,
+    PrismaModule,
+    UserModule,
+    AddressModule,
+    SessionModule,
+    PlantSpeciesModule,
+    PlantStatusModule,
+    PlantModule,
+    MeModule,
+    TipModule,
+  ],
   providers: [
     {
       provide: 'APP_GUARD',

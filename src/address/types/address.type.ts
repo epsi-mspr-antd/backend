@@ -1,6 +1,6 @@
 import { Address } from '@prisma/client';
 
-interface AddressI
+export interface AddressI
   extends Omit<Address, 'createdAt' | 'updatedAt' | 'userId'> {}
 
 export interface AddressRO {

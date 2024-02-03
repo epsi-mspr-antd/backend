@@ -1,4 +1,4 @@
-interface User {
+interface UserI {
   id: number;
 
   email: string;
@@ -7,9 +7,9 @@ interface User {
 }
 
 export interface UserRO {
-  data: User;
+  data: UserI;
 }
 
 export interface UsersRO {
-  data: User[];
+  data: UserI[];
 }

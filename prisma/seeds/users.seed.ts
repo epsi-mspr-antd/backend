@@ -2,12 +2,18 @@ import { Roles } from '../../src/user/types/roles.type';
 
 export const users = [
   {
-    email: 'owner@test.fr',
+    email: 'test@test.fr',
     password: 'Test123/',
     roles: {
       create: [
         {
           name: Roles.Owner,
+        },
+        {
+          name: Roles.Botanist,
+        },
+        {
+          name: Roles.Gardian,
         },
       ],
     },
@@ -41,18 +47,12 @@ export const users = [
     },
   },
   {
-    email: 'test@test.fr',
+    email: 'owner@test.fr',
     password: 'Test123/',
     roles: {
       create: [
         {
           name: Roles.Owner,
-        },
-        {
-          name: Roles.Botanist,
-        },
-        {
-          name: Roles.Gardian,
         },
       ],
     },

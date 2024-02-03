@@ -1,4 +1,4 @@
-interface PlantStatusI {
+export interface PlantStatusI {
   id: number;
 
   name: string;

@@ -16,13 +16,10 @@ export const addressSelect = {
 export class AddressService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(
-    userId: number,
-    createAddressDto: CreateAddressDto,
-  ): Promise<AddressRO> {
+  async create(userId: number, dto: CreateAddressDto): Promise<AddressRO> {
     const address = await this.prismaService.address.create({
       data: {
-        ...createAddressDto,
+        ...dto,
         user: {
           connect: {
             id: userId,
@@ -38,14 +35,14 @@ export class AddressService {
   async update(
     userId: number,
     id: number,
-    updateAddressDto: UpdateAddressDto,
+    dto: UpdateAddressDto,
   ): Promise<AddressRO> {
     await this.isAddressOwner(userId, id);
 
     const address = await this.prismaService.address.update({
       where: { id },
       data: {
-        ...updateAddressDto,
+        ...dto,
         user: {
           connect: {
             id: userId,

@@ -1,4 +1,11 @@
-import { Body, Controller, Param, Patch, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Param,
+  Patch,
+  Get,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { GetCurrentUserId } from 'src/auth/common/decorators';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto';
@@ -14,17 +21,17 @@ export class UserController {
   }
 
   @Get(':id')
-  findOne(@Param('id') paramId: string): Promise<UserRO> {
-    return this.userService.findOne(+paramId);
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<UserRO> {
+    return this.userService.findOne(id);
   }
 
   @Patch(':id')
   update(
     @GetCurrentUserId() userId: number,
-    @Param('id') paramId: string,
-    @Body() updateUserDto: UpdateUserDto,
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateUserDto,
   ): Promise<UserRO> {
-    return this.userService.update(+paramId, userId, updateUserDto);
+    return this.userService.update(userId, id, dto);
   }
 
   // @Delete(':id')

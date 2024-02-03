@@ -4,7 +4,7 @@ import { AddressesRO } from 'src/address/types';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class UserAddressService {
+export class MeAddressService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async findAll(userId: number): Promise<AddressesRO> {
