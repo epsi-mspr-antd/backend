@@ -56,8 +56,8 @@ model Address {
   street    String
   zip       String
   city      String
-  longitude String
-  latitude  String
+  longitude Float
+  latitude  Float
 
   plants    Plant[]
 
