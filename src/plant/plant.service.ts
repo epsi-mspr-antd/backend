@@ -10,6 +10,7 @@ export const plantSelect = {
   name: true,
   status: true,
   species: true,
+  address: true,
 };
 
 @Injectable()
@@ -18,6 +19,14 @@ export class PlantService {
     private readonly prismaService: PrismaService,
     private readonly addressService: AddressService,
   ) {}
+
+  async findAll(): Promise<PlantsRO> {
+    const plants = await this.prismaService.plant.findMany({
+      select: plantSelect,
+    });
+
+    return { data: plants };
+  }
 
   async findUserPlants(userId: number): Promise<PlantsRO> {
     const plants = await this.prismaService.plant.findMany({
