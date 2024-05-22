@@ -17,6 +17,11 @@ import { PlantRO, PlantsRO } from './types';
 export class PlantController {
   constructor(private readonly plantService: PlantService) {}
 
+  @Get()
+  async findAll(): Promise<PlantsRO> {
+    return await this.plantService.findAll();
+  }
+
   @Get('user/:id')
   async findUserPlants(
     @Param('id', ParseIntPipe) id: number,
