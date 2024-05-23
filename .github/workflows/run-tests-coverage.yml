@@ -1,0 +1,39 @@
+name: Run Tests Coverage
+
+on:
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '21.x'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Copy environment file
+        run: cp .env.dist .env
+
+      - name: Reset Prisma
+        run: npm run prisma:reset
+
+      - name: Run tests with coverage
+        run: npm run test:cov > test_output
+
+      - name: Check coverage
+        run: |
+          COVERAGE=$(grep 'All files' test_output | awk '{print $4}')
+          echo "Coverage is $COVERAGE%"
+          if (( $(echo "$COVERAGE < 45" | bc -l) )); then
+            echo "Coverage is below 45%"
+            exit 1
+          fi
