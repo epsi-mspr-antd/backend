@@ -2,7 +2,7 @@ import * as request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { setupApp } from './setup';
 
-describe('PlantsController (e2e)', () => {
+describe('Plants (e2e)', () => {
   let app: INestApplication;
   let accessToken: string;
 
