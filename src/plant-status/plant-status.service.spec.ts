@@ -23,7 +23,7 @@ describe('PlantStatusService', () => {
   });
 
   describe('findAll', () => {
-    it('get all plants', () => {
+    it('get all plantStatuses', () => {
       jest
         .spyOn(service, 'findAll')
         .mockResolvedValue({ data: [plantSpecies, plantSpecies] });
