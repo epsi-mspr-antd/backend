@@ -33,7 +33,7 @@ describe('PlantSpeciesController', () => {
   });
 
   describe('findAll', () => {
-    it('should return an array of plants', async () => {
+    it('should return an array of plantSpecies', async () => {
       jest.spyOn(controller, 'findAll').mockResolvedValue({ data: [plantSpecies] });
 
       expect(controller.findAll()).resolves.toEqual({ data: [plantSpecies] });
