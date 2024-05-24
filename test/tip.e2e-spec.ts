@@ -2,7 +2,7 @@ import * as request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { setupApp } from './setup';
 
-describe('Plants (e2e)', () => {
+describe('tips (e2e)', () => {
   let app: INestApplication;
   let accessToken: string;
 
@@ -12,33 +12,10 @@ describe('Plants (e2e)', () => {
     accessToken = token;
   });
 
-  describe('findAll', () => {
+  describe('findPlantTips', () => {
     it('should succeed', () => {
       return request(app.getHttpServer())
-        .get('/plants')
-        .set('Authorization', `Bearer ${accessToken}`)
-        .send()
-        .expect(200)
-        .expect((response) => {
-          expect(response.body).toHaveProperty('data');
-        });
-    });
-
-    it('should error', () => {
-      return request(app.getHttpServer())
-        .get('/plants')
-        .send()
-        .expect(401)
-        .expect((response) => {
-          expect(response.body).toHaveProperty('error');
-        });
-    });
-  });
-
-  describe('findUserPlants', () => {
-    it('should succeed', () => {
-      return request(app.getHttpServer())
-        .get('/plants/user/1')
+        .get('/tips/plant/1')
         .set('Authorization', `Bearer ${accessToken}`)
         .expect(200)
         .expect((response) => {
@@ -48,7 +25,7 @@ describe('Plants (e2e)', () => {
 
     it('should error', () => {
       return request(app.getHttpServer())
-        .get('/plants/user/test')
+        .get('/tips/plant/test')
         .set('Authorization', `Bearer ${accessToken}`)
         .expect(400)
         .expect((response) => {
@@ -60,13 +37,11 @@ describe('Plants (e2e)', () => {
   describe('create', () => {
     it('should succeed', () => {
       return request(app.getHttpServer())
-        .post('/plants')
+        .post('/tips')
         .set('Authorization', `Bearer ${accessToken}`)
         .send({
-          name: 'Je suis une plante',
-          speciesId: 1,
-          statusId: 1,
-          addressId: 1,
+            description: 'Un nouveau tip pour votre plante',
+            plantId: 1
         })
         .expect(201)
         .expect((response) => {
@@ -76,27 +51,54 @@ describe('Plants (e2e)', () => {
 
     it('should error', () => {
       return request(app.getHttpServer())
-        .post('/plants')
+        .post('/tips')
         .set('Authorization', `Bearer ${accessToken}`)
         .send({
-          name: 'Je suis une plante',
-          speciesId: 1,
-          statusId: 1,
+            description: 'Un nouveau tip pour votre plante',
+            plantId: null
         })
         .expect(400)
         .expect((response) => {
           expect(response.body).toHaveProperty('error');
         });
     });
+
+    it('should error', () => {
+        return request(app.getHttpServer())
+          .post('/tips')
+          .set('Authorization', `Bearer ${accessToken}`)
+          .send({
+              description: '',
+              plantId: 1
+          })
+          .expect(400)
+          .expect((response) => {
+            expect(response.body).toHaveProperty('error');
+          });
+      });
+
+    it('should error', () => {
+        return request(app.getHttpServer())
+          .post('/tips')
+          .set('Authorization', `Bearer ${accessToken}`)
+          .send({
+              description: '',
+              plantId: null
+          })
+          .expect(400)
+          .expect((response) => {
+            expect(response.body).toHaveProperty('error');
+          });
+      });
   });
 
   describe('update', () => {
     it('should succeed', () => {
       return request(app.getHttpServer())
-        .patch('/plants/1')
+        .patch('/tips/1')
         .set('Authorization', `Bearer ${accessToken}`)
         .send({
-          name: 'Je suis une plante',
+          description: 'Maj du tip',
         })
         .expect(200)
         .expect((response) => {
@@ -106,10 +108,10 @@ describe('Plants (e2e)', () => {
 
     it('should error', () => {
       return request(app.getHttpServer())
-        .patch('/plants/test')
+        .patch('/tips/test')
         .set('Authorization', `Bearer ${accessToken}`)
         .send({
-          name: 'Je suis une plante',
+          description: 'Maj du tip',
         })
         .expect(400)
         .expect((response) => {
@@ -121,7 +123,7 @@ describe('Plants (e2e)', () => {
   describe('delete', () => {
     it('should error', () => {
       return request(app.getHttpServer())
-        .delete('/plants/test')
+        .delete('/tips/test')
         .set('Authorization', `Bearer ${accessToken}`)
         .expect(400)
         .expect((response) => {
