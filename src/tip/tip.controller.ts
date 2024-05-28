@@ -14,7 +14,6 @@ import { CreateTipDto, UpdateTipDto } from './dto';
 import { TipRO, TipsRO } from './types';
 import { Roles } from 'src/user/types';
 
-@Permissions(Roles.Botanist)
 @Controller('tips')
 export class TipController {
   constructor(private readonly tipService: TipService) {}
@@ -24,6 +23,7 @@ export class TipController {
     return await this.tipService.findPlantTips(id);
   }
 
+  @Permissions(Roles.Botanist)
   @Post()
   async create(
     @GetCurrentUserId() userId: number,
@@ -32,6 +32,7 @@ export class TipController {
     return await this.tipService.create(userId, dto);
   }
 
+  @Permissions(Roles.Botanist)
   @Patch(':id')
   async update(
     @GetCurrentUserId() userId: number,
@@ -41,6 +42,7 @@ export class TipController {
     return await this.tipService.update(userId, id, dto);
   }
 
+  @Permissions(Roles.Botanist)
   @Delete(':id')
   async delete(
     @GetCurrentUserId() userId: number,
