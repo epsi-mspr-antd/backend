@@ -51,6 +51,7 @@ export class AuthService {
 
     return {
       data: {
+        id: newUser.id,
         access_token: await this.generateAtToken(
           newUser.id,
           newUser.email,
@@ -88,6 +89,7 @@ export class AuthService {
 
     return {
       data: {
+        id: user.id,
         access_token: await this.generateAtToken(
           user.id,
           user.email,

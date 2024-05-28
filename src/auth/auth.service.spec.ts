@@ -4,7 +4,6 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { SessionService } from 'src/session/session.service';
 import { JwtService } from '@nestjs/jwt';
 
-
 describe('AuthService', () => {
   let service: AuthService;
 
@@ -14,6 +13,7 @@ describe('AuthService', () => {
   };
 
   const tokensRO = {
+    id: 1,
     access_token: 'test_access_token',
     refresh_token: 'test_refesh_token',
   };
@@ -32,18 +32,14 @@ describe('AuthService', () => {
 
   describe('signup', () => {
     it('allow you to register', () => {
-      jest
-        .spyOn(service, 'signup')
-        .mockResolvedValue({ data: tokensRO });
-      expect(service.signup(auth)).resolves.toEqual({ data: tokensRO  });
+      jest.spyOn(service, 'signup').mockResolvedValue({ data: tokensRO });
+      expect(service.signup(auth)).resolves.toEqual({ data: tokensRO });
     });
   });
 
   describe('signin', () => {
     it('allow you to connect', () => {
-      jest
-        .spyOn(service, 'signin')
-        .mockResolvedValue({ data: tokensRO });
+      jest.spyOn(service, 'signin').mockResolvedValue({ data: tokensRO });
       expect(service.signin(auth)).resolves.toEqual({
         data: tokensRO,
       });
@@ -60,12 +56,15 @@ describe('AuthService', () => {
   describe('refreshTokens', () => {
     it('Updating the token', () => {
       const accesToken = {
-        access_token: 'test_accesToken'
+        access_token: 'test_accesToken',
       };
 
-      jest.spyOn(service, 'refreshTokens').mockResolvedValue({ data: accesToken });
-      expect(service.refreshTokens(1, 'test_refreshTokens')).resolves.toEqual({ data: accesToken });
+      jest
+        .spyOn(service, 'refreshTokens')
+        .mockResolvedValue({ data: accesToken });
+      expect(service.refreshTokens(1, 'test_refreshTokens')).resolves.toEqual({
+        data: accesToken,
+      });
     });
   });
-
 });
