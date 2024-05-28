@@ -7,6 +7,12 @@ import { JwtService } from '@nestjs/jwt';
 describe('AuthService', () => {
   let service: AuthService;
 
+  const authCreate = {
+    pseudo: 'Test_Auth',
+    email: 'test.auth@tes.com',
+    password: 'Test_Pwd_Auth',
+  };
+
   const auth = {
     email: 'test.auth@tes.com',
     password: 'Test_Pwd_Auth',
@@ -33,7 +39,7 @@ describe('AuthService', () => {
   describe('signup', () => {
     it('allow you to register', () => {
       jest.spyOn(service, 'signup').mockResolvedValue({ data: tokensRO });
-      expect(service.signup(auth)).resolves.toEqual({ data: tokensRO });
+      expect(service.signup(authCreate)).resolves.toEqual({ data: tokensRO });
     });
   });
 

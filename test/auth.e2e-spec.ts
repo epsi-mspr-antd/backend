@@ -29,6 +29,7 @@ describe('auth (e2e)', () => {
         .send({
           email: 'jeneSuisPasUnEmail',
           password: 'jeSuisUnPassword',
+          pseudo: 'test',
         })
         .expect(400)
         .expect((response) => {
@@ -42,6 +43,7 @@ describe('auth (e2e)', () => {
         .send({
           email: '',
           password: 'jeSuisUnPassword',
+          pseudo: 'test',
         })
         .expect(400)
         .expect((response) => {
@@ -55,6 +57,7 @@ describe('auth (e2e)', () => {
         .send({
           email: '',
           password: '',
+          pseudo: 'test',
         })
         .expect(400)
         .expect((response) => {
@@ -71,6 +74,7 @@ describe('auth (e2e)', () => {
         .send({
           email: 'test.test@test.com',
           password: '',
+          pseudo: 'test',
         })
         .expect(400)
         .expect((response) => {

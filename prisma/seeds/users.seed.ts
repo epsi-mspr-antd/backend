@@ -2,6 +2,7 @@ import { Roles } from '../../src/user/types/roles.type';
 
 export const users = [
   {
+    pseudo: 'test',
     email: 'test@test.fr',
     password: 'Test123/',
     roles: {
@@ -19,6 +20,7 @@ export const users = [
     },
   },
   {
+    pseudo: 'botanist',
     email: 'botanist@test.fr',
     password: 'Test123/',
     roles: {
@@ -33,6 +35,7 @@ export const users = [
     },
   },
   {
+    pseudo: 'gardian',
     email: 'gardian@test.fr',
     password: 'Test123/',
     roles: {
@@ -47,6 +50,7 @@ export const users = [
     },
   },
   {
+    pseudo: 'owner',
     email: 'owner@test.fr',
     password: 'Test123/',
     roles: {

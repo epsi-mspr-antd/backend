@@ -7,6 +7,7 @@ import { UserRO, UsersRO } from './types';
 export const userSelect = {
   id: true,
   email: true,
+  pseudo: true,
   roles: {
     select: {
       name: true,
