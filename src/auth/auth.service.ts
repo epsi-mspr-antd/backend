@@ -102,6 +102,12 @@ export class AuthService {
   }
 
   async logout(userId: number): Promise<void> {
+    const sessionExists = await this.sessionsServices.findByUserId(userId);
+
+    if (!sessionExists) {
+      throw new ForbiddenException('User is already signed out');
+    }
+
     await this.sessionsServices.delete(userId);
   }
 
