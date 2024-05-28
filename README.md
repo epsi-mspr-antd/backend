@@ -1,78 +1,137 @@
-## Todos
+Voici le fichier `README.md` mis à jour avec les sections supplémentaires pour Docker et les tests :
 
-Refaire la logique du refresh token. Pour l'instant tous les tokens sont refresh mais c'est pas bon. Il faut juste refresh le access token.
+# 🌸 arosaje
 
+## 🌟 Description
 
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+Ce projet est construit avec [NestJS](https://nestjs.com/), un framework pour construire des applications serveur Node.js efficaces et fiables.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 📋 Prérequis
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Avant de lancer le projet, assurez-vous d'avoir installé les éléments suivants :
 
-## Description
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🚀 Installation
 
-## Installation
+### 1. Cloner le dépôt
+
+Clonez le dépôt :
 
 ```bash
-$ npm install
+git clone https://github.com/epsi-mspr-antd/backend
+cd backend
 ```
 
-## Running the app
+### 2. Installer les dépendances
+
+Installez les dépendances :
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Test
+### 3. Configuration
+
+1. Copiez le fichier `.env.dist` vers `.env` :
+
+   ```bash
+   cp .env.dis .env
+   ```
+
+2. Modifiez le fichier `.env` avec les valeurs appropriées.
+
+### 4. Réinitialiser la base de données
+
+Réinitialisez la base de données avec Prisma :
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run prisma:reset
 ```
 
-## Support
+### 5. Démarrer le serveur
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Démarrez le serveur en mode développement :
 
-## Stay in touch
+```bash
+npm run start:dev
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Votre application devrait maintenant être en cours d'exécution. Vous pouvez accéder à l'API via `http://localhost:3000`.
 
-## License
+## 📦 Conteneurisation avec Docker
 
-Nest is [MIT licensed](LICENSE).
+Ce projet est conteneurisé avec Docker. Vous pouvez utiliser l'image Docker disponible sur Docker Hub.
+
+Image Docker : [mageas/mspr-backend](https://hub.docker.com/r/mageas/mspr-backend)
+
+### Utilisation de Docker
+
+Pour exécuter le projet avec Docker, utilisez les commandes suivantes :
+
+1. Assurez-vous d'avoir Docker installé sur votre machine.
+
+2. Vous devez avoir une base de données déjà configurée et accessible par le conteneur.
+
+3. Suivre les instructions sur [mageas/mspr-backend](https://hub.docker.com/r/mageas/mspr-backend)
+
+Votre application sera accessible via `http://localhost:3000`.
+
+## 🛡️ Permissions des Routes
+
+Liste de toutes les routes :
+
+- `/users`
+- `/plant-status`
+- `/plant-species`
+- `/plants`
+- `/me`
+- `/auth`
+- `/addresses`
+- `/tips`
+- `/plant-guarded`
+
+### Routes avec permissions
+
+Les routes suivantes nécessitent des permissions spécifiques ou une authentification :
+
+- `/tips` (POST, PATCH, DELETE): **Role Botanist** (seuls les utilisateurs avec le rôle de botaniste peuvent créer, mettre à jour ou supprimer des tips)
+- `/plant-guarded/guard` (PATCH): **Role Guardian** (seuls les utilisateurs avec le rôle de garde peuvent garder des plantes)
+
+## 🧪 Tests
+
+Pour exécuter les tests, utilisez la commande suivante :
+
+```bash
+npm run test
+```
+
+### Types de tests
+
+- `npm run test`: Exécute les tests unitaires.
+- `npm run test:e2e`: Exécute les tests de bout en bout.
+- `npm run test:cov`: Exécute les tests et génère un rapport de couverture de code.
+
+## 🛠️ Scripts disponibles
+
+- `npm run start`: Démarre l'application en mode production.
+- `npm run start:dev`: Démarre l'application en mode développement avec rechargement à chaud.
+- `npm run build`: Compile le projet.
+- `npm run prisma:reset`: Réinitialise la base de données Prisma.
+- `npm run test`: Exécute les tests unitaires.
+- `npm run test:e2e`: Exécute les tests de bout en bout.
+- `npm run test:cov`: Exécute les tests avec un rapport de couverture.
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! Veuillez soumettre une pull request pour toute amélioration ou correction de bug.
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+
+```
+
+N'oubliez pas d'ajuster le lien du dépôt GitHub, les informations spécifiques à votre projet, et le fichier de licence si nécessaire.
+```
