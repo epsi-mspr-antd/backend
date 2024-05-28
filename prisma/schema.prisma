@@ -120,8 +120,8 @@ model PlantGuardian {
 
   plantId Int
   plant   Plant @relation(fields: [plantId], references: [id])
-  guardId Int
-  guard   User  @relation(fields: [guardId], references: [id])
+  guardId Int?
+  guard   User? @relation(fields: [guardId], references: [id])
 
   @@map("plant_guardian")
 }
