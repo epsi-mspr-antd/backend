@@ -7,11 +7,12 @@ describe('AddressService', () => {
 
   const address = {
     id: 1,
+    name: 'test',
     street: 'La rue du test',
     zip: '69230',
     city: 'LYON',
     longitude: 4.8357,
-    latitude: 45.764
+    latitude: 45.764,
   };
 
   beforeEach(async () => {
@@ -31,11 +32,12 @@ describe('AddressService', () => {
       jest.spyOn(service, 'create').mockResolvedValue({ data: address });
       expect(
         service.create(1, {
-            street: 'Je suis une nouvelle rue',
-            zip: '37000',
-            city: 'TOURS',
-            longitude: 0.8357,
-            latitude: 30.764
+          name: 'test',
+          street: 'Je suis une nouvelle rue',
+          zip: '37000',
+          city: 'TOURS',
+          longitude: 0.8357,
+          latitude: 30.764,
         }),
       ).resolves.toEqual({ data: address });
     });
@@ -61,5 +63,4 @@ describe('AddressService', () => {
       expect(service.isAddressOwner(1, 1)).resolves.toBeUndefined();
     });
   });
-
 });

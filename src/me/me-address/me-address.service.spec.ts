@@ -7,15 +7,16 @@ describe('MeAddressService', () => {
 
   const meAddress = {
     id: 1,
+    name: 'test',
     street: 'La rue du test',
     zip: '69230',
     city: 'LYON',
     longitude: 4.8357,
-    latitude: 45.764
-  }
+    latitude: 45.764,
+  };
 
   const meAddressesRO = {
-    data: [meAddress]
+    data: [meAddress],
   };
 
   beforeEach(async () => {
@@ -33,10 +34,7 @@ describe('MeAddressService', () => {
   describe('findAll', () => {
     it('should return an array of my adresses', () => {
       jest.spyOn(service, 'findAll').mockResolvedValue(meAddressesRO);
-      expect(
-        service.findAll(1),
-      ).resolves.toEqual(meAddressesRO);
+      expect(service.findAll(1)).resolves.toEqual(meAddressesRO);
     });
   });
-
 });

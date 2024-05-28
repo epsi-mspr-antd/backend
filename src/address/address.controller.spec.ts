@@ -8,16 +8,17 @@ describe('AddressController', () => {
 
   const address = {
     id: 1,
+    name: 'test',
     street: 'La rue du test',
     zip: '69230',
     city: 'LYON',
     longitude: 4.8357,
-    latitude: 45.764
+    latitude: 45.764,
   };
 
-  const addressRo ={
-    data: address
-  }
+  const addressRo = {
+    data: address,
+  };
 
   const mockAddressService = {
     create: jest.fn(),
@@ -58,12 +59,14 @@ describe('AddressController', () => {
         zip: '69230',
         city: 'LYON',
         longitude: 4.8357,
-        latitude: 45.764
+        latitude: 45.764,
       };
 
       jest.spyOn(controller, 'update').mockResolvedValue(addressRo);
 
-      expect(controller.update(1, 1, updateAddressDto)).resolves.toEqual({data: address});
+      expect(controller.update(1, 1, updateAddressDto)).resolves.toEqual({
+        data: address,
+      });
     });
   });
 

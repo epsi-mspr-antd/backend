@@ -18,11 +18,12 @@ describe('Addresses (e2e)', () => {
         .post('/addresses')
         .set('Authorization', `Bearer ${accessToken}`)
         .send({
-            street: 'Je suis une nouvelle rue',
-            zip: '37000',
-            city: 'TOURS',
-            longitude: 0.8357,
-            latitude: 30.764
+          name: 'test',
+          street: 'Je suis une nouvelle rue',
+          zip: '37000',
+          city: 'TOURS',
+          longitude: 0.8357,
+          latitude: 30.764,
         })
         .expect(201)
         .expect((response) => {
@@ -67,7 +68,7 @@ describe('Addresses (e2e)', () => {
         .set('Authorization', `Bearer ${accessToken}`)
         .send({
           street: 'Je suis une nouvelle rue',
-          zip: '37000'
+          zip: '37000',
         })
         .expect(400)
         .expect((response) => {

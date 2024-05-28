@@ -7,19 +7,20 @@ describe('MeAddressController', () => {
 
   const meAddress = {
     id: 1,
+    name: 'test',
     street: 'La rue du test',
     zip: '69230',
     city: 'LYON',
     longitude: 4.8357,
-    latitude: 45.764
-  }
+    latitude: 45.764,
+  };
 
   const meAddressesRO = {
-    data: [meAddress]
+    data: [meAddress],
   };
 
   const mockMeAddressService = {
-    findAll: jest.fn(), 
+    findAll: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -47,5 +48,4 @@ describe('MeAddressController', () => {
       expect(controller.findAll(1)).resolves.toEqual(meAddressesRO);
     });
   });
-
 });
