@@ -11,9 +11,9 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
 
   roles     Role[]
   addresses Address[]
@@ -29,21 +29,21 @@ model User {
 }
 
 model Role {
-  id        Int      @id @default(autoincrement())
-  name      String
+  id   Int    @id @default(autoincrement())
+  name String
 
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
-  
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
   @@map("role")
 }
 
 model Session {
-  id        Int      @id @default(autoincrement())
-  token     String?
+  id    Int     @id @default(autoincrement())
+  token String?
 
-  userId    Int      @unique
-  user      User     @relation(fields: [userId], references: [id])
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id])
 
   updatedAt DateTime @updatedAt
 
@@ -51,18 +51,19 @@ model Session {
 }
 
 model Address {
-  id        Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
+  name      String
   street    String
   zip       String
   city      String
   longitude Float
   latitude  Float
 
-  plants    Plant[]
+  plants Plant[]
 
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -71,22 +72,22 @@ model Address {
 }
 
 model Plant {
-  id        Int      @id @default(autoincrement())
-  name      String
+  id   Int    @id @default(autoincrement())
+  name String
 
   guardians PlantGuardian[]
   photos    Photo[]
   tips      Tip[]
 
   userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User         @relation(fields: [userId], references: [id])
   addressId Int
-  address   Address  @relation(fields: [addressId], references: [id])
+  address   Address      @relation(fields: [addressId], references: [id])
   statusId  Int
-  status    PlantStatus @relation(fields: [statusId], references: [id])
+  status    PlantStatus  @relation(fields: [statusId], references: [id])
   speciesId Int
   species   PlantSpecies @relation(fields: [speciesId], references: [id])
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -94,42 +95,42 @@ model Plant {
 }
 
 model PlantStatus {
-  id        Int      @id @default(autoincrement())
-  name      String
+  id   Int    @id @default(autoincrement())
+  name String
 
-  plants    Plant[]
+  plants Plant[]
 
   @@map("plant_status")
 }
 
 model PlantSpecies {
-  id        Int      @id @default(autoincrement())
-  name      String
+  id   Int    @id @default(autoincrement())
+  name String
 
-  plants    Plant[]
+  plants Plant[]
 
   @@map("plant_species")
 }
 
 model PlantGuardian {
-  id        Int      @id @default(autoincrement())
-  from      DateTime
-  to        DateTime
+  id   Int      @id @default(autoincrement())
+  from DateTime
+  to   DateTime
 
-  plantId   Int
-  plant     Plant    @relation(fields: [plantId], references: [id])
-  guardId   Int
-  guard     User     @relation(fields: [guardId], references: [id])
+  plantId Int
+  plant   Plant @relation(fields: [plantId], references: [id])
+  guardId Int
+  guard   User  @relation(fields: [guardId], references: [id])
 
   @@map("plant_guardian")
 }
 
 model Photo {
-  id        Int      @id @default(autoincrement())
-  url       String
+  id  Int    @id @default(autoincrement())
+  url String
 
-  plantId   Int
-  plant     Plant    @relation(fields: [plantId], references: [id])
+  plantId Int
+  plant   Plant @relation(fields: [plantId], references: [id])
 
   createdAt DateTime @default(now())
 
@@ -137,13 +138,13 @@ model Photo {
 }
 
 model Tip {
-  id          Int      @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   description String
 
-  userId      Int
-  user        User     @relation(fields: [userId], references: [id])
-  plantId     Int
-  plant       Plant    @relation(fields: [plantId], references: [id])
+  userId  Int
+  user    User  @relation(fields: [userId], references: [id])
+  plantId Int
+  plant   Plant @relation(fields: [plantId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

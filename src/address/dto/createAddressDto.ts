@@ -8,6 +8,10 @@ import {
 export class CreateAddressDto {
   @IsNotEmpty()
   @IsString()
+  name: string;
+
+  @IsNotEmpty()
+  @IsString()
   street: string;
 
   @IsNotEmpty()

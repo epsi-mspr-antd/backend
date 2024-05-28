@@ -5,6 +5,7 @@ import { AddressRO } from './types';
 
 export const addressSelect = {
   id: true,
+  name: true,
   street: true,
   zip: true,
   city: true,
