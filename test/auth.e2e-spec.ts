@@ -13,11 +13,11 @@ describe('auth (e2e)', () => {
     accessToken = token;
 
     const requestToken = await request(app.getHttpServer())
-                            .post('/auth/signin')
-                            .send({
-                                email: 'test@test.fr',
-                                password: 'Test123/'
-                            })
+      .post('/auth/signin')
+      .send({
+        email: 'test@test.fr',
+        password: 'Test123/',
+      });
 
     refreshToken = requestToken.body.data.refresh_token;
   });
@@ -27,21 +27,8 @@ describe('auth (e2e)', () => {
       return request(app.getHttpServer())
         .post('/auth/signup')
         .send({
-            email: 'jeneSuisPasUnEmail',
-            password: 'jeSuisUnPassword'
-        })
-        .expect(400)
-        .expect((response) => {
-          expect(response.body.message).toEqual(['email must be an email']);
-        });
-    });    
-
-    it('should error', () => {
-        return request(app.getHttpServer())
-        .post('/auth/signup')
-        .send({
-            email: '',
-            password: 'jeSuisUnPassword'
+          email: 'jeneSuisPasUnEmail',
+          password: 'jeSuisUnPassword',
         })
         .expect(400)
         .expect((response) => {
@@ -50,28 +37,46 @@ describe('auth (e2e)', () => {
     });
 
     it('should error', () => {
-        return request(app.getHttpServer())
+      return request(app.getHttpServer())
         .post('/auth/signup')
         .send({
-            email: '',
-            password: ''
+          email: '',
+          password: 'jeSuisUnPassword',
         })
         .expect(400)
         .expect((response) => {
-          expect(response.body.message).toEqual(['email must be an email','password should not be empty']);
+          expect(response.body.message).toEqual(['email must be an email']);
         });
     });
 
     it('should error', () => {
-        return request(app.getHttpServer())
+      return request(app.getHttpServer())
         .post('/auth/signup')
         .send({
-            email: 'test.test@test.com',
-            password: ''
+          email: '',
+          password: '',
         })
         .expect(400)
         .expect((response) => {
-          expect(response.body.message).toEqual(['password should not be empty']);
+          expect(response.body.message).toEqual([
+            'email must be an email',
+            'password should not be empty',
+          ]);
+        });
+    });
+
+    it('should error', () => {
+      return request(app.getHttpServer())
+        .post('/auth/signup')
+        .send({
+          email: 'test.test@test.com',
+          password: '',
+        })
+        .expect(400)
+        .expect((response) => {
+          expect(response.body.message).toEqual([
+            'password should not be empty',
+          ]);
         });
     });
   });
@@ -81,8 +86,8 @@ describe('auth (e2e)', () => {
       return request(app.getHttpServer())
         .post('/auth/signin')
         .send({
-            email: 'test@test.fr',
-            password: 'Test123/'
+          email: 'test@test.fr',
+          password: 'Test123/',
         })
         .expect(200)
         .expect((response) => {
@@ -96,47 +101,53 @@ describe('auth (e2e)', () => {
         .send({})
         .expect(400)
         .expect((response) => {
-          expect(response.body.message).toEqual(['email must be an email', 'password must be a string', 'password should not be empty']);
+          expect(response.body.message).toEqual([
+            'email must be an email',
+            'password must be a string',
+            'password should not be empty',
+          ]);
           expect(response.body.error).toEqual('Bad Request');
         });
     });
 
     it('should error', () => {
-        return request(app.getHttpServer())
-          .post('/auth/signin')
-          .send({
-            email: 'test@test.fr',
-            password: ''
+      return request(app.getHttpServer())
+        .post('/auth/signin')
+        .send({
+          email: 'test@test.fr',
+          password: '',
         })
-          .expect(400)
-          .expect((response) => {
-            expect(response.body.message).toEqual(['password should not be empty']);
-            expect(response.body.error).toEqual('Bad Request');
-          });
-      });
-
-      it('should error', () => {
-        return request(app.getHttpServer())
-          .post('/auth/signin')
-          .send({
-            email: '',
-            password: 'Test123/'
-        })
-          .expect(400)
-          .expect((response) => {
-            expect(response.body.message).toEqual(['email must be an email']);
-            expect(response.body.error).toEqual('Bad Request');
-          });
-      });
+        .expect(400)
+        .expect((response) => {
+          expect(response.body.message).toEqual([
+            'password should not be empty',
+          ]);
+          expect(response.body.error).toEqual('Bad Request');
+        });
+    });
 
     it('should error', () => {
-        return request(app.getHttpServer())
-          .post('/auth/signin')
-          .expect(400)
-          .expect((response) => {
-            expect(response.body).toHaveProperty('error');
-          });
-      });
+      return request(app.getHttpServer())
+        .post('/auth/signin')
+        .send({
+          email: '',
+          password: 'Test123/',
+        })
+        .expect(400)
+        .expect((response) => {
+          expect(response.body.message).toEqual(['email must be an email']);
+          expect(response.body.error).toEqual('Bad Request');
+        });
+    });
+
+    it('should error', () => {
+      return request(app.getHttpServer())
+        .post('/auth/signin')
+        .expect(400)
+        .expect((response) => {
+          expect(response.body).toHaveProperty('error');
+        });
+    });
   });
 
   describe('refreshTokens', () => {
@@ -167,7 +178,7 @@ describe('auth (e2e)', () => {
       return request(app.getHttpServer())
         .post('/auth/logout')
         .set('authorization', `Bearer ${accessToken}`)
-        .expect(200)
+        .expect(200);
     });
 
     it('should error', () => {

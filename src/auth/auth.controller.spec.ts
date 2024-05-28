@@ -11,6 +11,7 @@ describe('AuthController', () => {
   };
 
   const tokensRO = {
+    id: 1,
     access_token: 'test_access_token',
     refresh_token: 'test_refesh_token',
   };
@@ -62,18 +63,21 @@ describe('AuthController', () => {
 
       expect(controller.logout(1)).resolves.toBeUndefined();
     });
-});
-
-  describe('refreshTokens', () => {
-    it('should return a refreshToken', async () => {          
-      const accesToken = {
-        access_token: 'test_accesToken'
-      };
-
-      jest.spyOn(controller, 'refreshTokens').mockResolvedValue({ data: accesToken });
-
-      expect(controller.refreshTokens(1, 'refreshTest')).resolves.toEqual({data: accesToken});
-    });
   });
 
+  describe('refreshTokens', () => {
+    it('should return a refreshToken', async () => {
+      const accesToken = {
+        access_token: 'test_accesToken',
+      };
+
+      jest
+        .spyOn(controller, 'refreshTokens')
+        .mockResolvedValue({ data: accesToken });
+
+      expect(controller.refreshTokens(1, 'refreshTest')).resolves.toEqual({
+        data: accesToken,
+      });
+    });
+  });
 });
