@@ -76,7 +76,7 @@ describe('Users (e2e)', () => {
         .patch('/users/test')
         .set('Authorization', `Bearer ${accessToken}`)
         .send({
-            email: 'test@test.fr',
+          email: 'test@test.fr',
         })
         .expect(400)
         .expect((response) => {
@@ -85,17 +85,17 @@ describe('Users (e2e)', () => {
     });
   });
 
-//   describe('delete', () => {
-//     it('should error', () => {
-//       return request(app.getHttpServer())
-//         .delete('/users/test')
-//         .set('Authorization', `Bearer ${accessToken}`)
-//         .expect(400)
-//         .expect((response) => {
-//           expect(response.body).toHaveProperty('error');
-//         });
-//     });
-//   });
+  //   describe('delete', () => {
+  //     it('should error', () => {
+  //       return request(app.getHttpServer())
+  //         .delete('/users/test')
+  //         .set('Authorization', `Bearer ${accessToken}`)
+  //         .expect(400)
+  //         .expect((response) => {
+  //           expect(response.body).toHaveProperty('error');
+  //         });
+  //     });
+  //   });
 
   afterAll(async () => {
     await app.close();

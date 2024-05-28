@@ -5,6 +5,12 @@ import { AuthService } from './auth.service';
 describe('AuthController', () => {
   let controller: AuthController;
 
+  const authCreate = {
+    pseudo: 'Test_Auth',
+    email: 'test.auth@tes.com',
+    password: 'Test_Pwd_Auth',
+  };
+
   const auth = {
     email: 'test.auth@tes.com',
     password: 'Test_Pwd_Auth',
@@ -45,7 +51,9 @@ describe('AuthController', () => {
     it('should return an accessToken & refreshToken', async () => {
       jest.spyOn(controller, 'signup').mockResolvedValue({ data: tokensRO });
 
-      expect(controller.signup(auth)).resolves.toEqual({ data: tokensRO });
+      expect(controller.signup(authCreate)).resolves.toEqual({
+        data: tokensRO,
+      });
     });
   });
 

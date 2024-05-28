@@ -7,7 +7,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthDto } from './dto';
+import { AuthDto, CreateAuthDto } from './dto';
 import { AccessTokenRO, TokensRO } from './types';
 import { RtGuard } from './common/guards';
 import { GetCurrentUser, GetCurrentUserId, Public } from './common/decorators';
@@ -19,7 +19,7 @@ export class AuthController {
   @Public()
   @Post('signup')
   @HttpCode(HttpStatus.CREATED)
-  signup(@Body() authDto: AuthDto): Promise<TokensRO> {
+  signup(@Body() authDto: CreateAuthDto): Promise<TokensRO> {
     return this.authService.signup(authDto);
   }
 
