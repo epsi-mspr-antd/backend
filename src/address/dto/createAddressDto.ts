@@ -30,3 +30,12 @@ export class CreateAddressDto {
   @IsNumber()
   latitude: number;
 }
+
+export const createAddressDtoExample: CreateAddressDto = {
+  name: 'Maison',
+  street: 'Rue de la Paix',
+  zip: '75000',
+  city: 'Paris',
+  longitude: 2.3522,
+  latitude: 48.8566,
+};

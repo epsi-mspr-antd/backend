@@ -21,3 +21,14 @@ export class AuthDto {
   @IsString()
   password: string;
 }
+
+export const createAuthDtoExample: CreateAuthDto = {
+  email: 'johndoe@example.com',
+  password: 'password123',
+  pseudo: 'pseudo',
+};
+
+export const authDtoExample: AuthDto = {
+  email: 'johndoe@example.com',
+  password: 'password123',
+};

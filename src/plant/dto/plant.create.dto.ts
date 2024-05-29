@@ -17,3 +17,10 @@ export class CreatePlantDto {
   @IsNumber()
   addressId: number;
 }
+
+export const createPlantDtoExample: CreatePlantDto = {
+  name: 'Rose',
+  speciesId: 1,
+  statusId: 2,
+  addressId: 3,
+};
