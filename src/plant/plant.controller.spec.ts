@@ -74,6 +74,32 @@ describe('PlantController', () => {
     });
   });
 
+  describe('fetchAllGuard', () => {
+    it('should list guarded plant', async () => {
+      jest
+        .spyOn(controller, 'fetchAllGuard')
+        .mockResolvedValue({ data: [plant] });
+
+      expect(controller.fetchAllGuard(1)).resolves.toEqual({ data: [plant] });
+    });
+  });
+
+  describe('guard', () => {
+    it('should guard a plant', async () => {
+      jest.spyOn(controller, 'guard').mockResolvedValue({ data: plant });
+
+      expect(controller.guard(1, 1)).resolves.toEqual({ data: plant });
+    });
+  });
+
+  describe('unguard', () => {
+    it('should unguard a plant', async () => {
+      jest.spyOn(controller, 'unguard').mockResolvedValue({ data: plant });
+
+      expect(controller.unguard(1, 1)).resolves.toEqual({ data: plant });
+    });
+  });
+
   describe('update', () => {
     it('should update and return a plant', async () => {
       const updatePlantDto: UpdatePlantDto = {

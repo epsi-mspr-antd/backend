@@ -9,7 +9,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { PlantService } from './plant.service';
-import { GetCurrentUserId } from 'src/auth/common/decorators';
+import { GetCurrentUserId, Permissions } from 'src/auth/common/decorators';
 import {
   CreatePlantDto,
   UpdatePlantDto,
@@ -24,6 +24,7 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
+import { Roles } from 'src/user/types';
 
 @ApiTags('plants')
 @Controller('plants')
@@ -105,6 +106,56 @@ export class PlantController {
     @Body() dto: UpdatePlantDto,
   ): Promise<PlantRO> {
     return await this.plantService.update(userId, id, dto);
+  }
+
+  @Get('guard/:id')
+  @ApiOperation({
+    summary: 'Get all users guarding a plant',
+    description: 'Get all users guarding a plant',
+  })
+  @ApiBearerAuth()
+  async fetchAllGuard(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<PlantsRO> {
+    return await this.plantService.fetchAllGuard(id);
+  }
+
+  @Permissions(Roles.Gardian)
+  @Patch('guard/:id')
+  @ApiOperation({
+    summary: 'Guard a plant',
+    description: 'Guard a plant by its ID',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID of the plant to guard',
+    type: Number,
+  })
+  @ApiBearerAuth()
+  async guard(
+    @GetCurrentUserId() userId: number,
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<PlantRO> {
+    return await this.plantService.guard(userId, id);
+  }
+
+  @Permissions(Roles.Gardian)
+  @Patch('unguard/:id')
+  @ApiOperation({
+    summary: 'Unguard a plant',
+    description: 'Unguard a plant by its ID',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID of the plant to unguard',
+    type: Number,
+  })
+  @ApiBearerAuth()
+  async unguard(
+    @GetCurrentUserId() userId: number,
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<PlantRO> {
+    return await this.plantService.unguard(userId, id);
   }
 
   @Delete(':id')

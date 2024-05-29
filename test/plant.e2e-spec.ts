@@ -90,6 +90,44 @@ describe('Plants (e2e)', () => {
     });
   });
 
+  describe('fetchAllGuard', () => {
+    it('should succeed', () => {
+      return request(app.getHttpServer())
+        .get('/plants/guard/1')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .expect(200)
+        .expect((response) => {
+          expect(response.body).toHaveProperty('data');
+        });
+    });
+  });
+
+  describe('guard', () => {
+    it('should error', () => {
+      return request(app.getHttpServer())
+        .patch('/plants/guard/test')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send()
+        .expect(400)
+        .expect((response) => {
+          expect(response.body).toHaveProperty('error');
+        });
+    });
+  });
+
+  describe('unguard', () => {
+    it('should error', () => {
+      return request(app.getHttpServer())
+        .patch('/plants/unguard/test')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send()
+        .expect(400)
+        .expect((response) => {
+          expect(response.body).toHaveProperty('error');
+        });
+    });
+  });
+
   describe('update', () => {
     it('should succeed', () => {
       return request(app.getHttpServer())
