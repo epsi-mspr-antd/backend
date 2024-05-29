@@ -16,12 +16,12 @@ model User {
   password String
   pseudo   String
 
-  roles     Role[]
-  addresses Address[]
-  plants    Plant[]
-  guardians PlantGuardian[]
-  tips      Tip[]
-  session   Session?
+  roles       Role[]
+  addresses   Address[]
+  plants      Plant[]   @relation("owner")
+  plantsGuard Plant[]   @relation("guard")
+  tips        Tip[]
+  session     Session?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -76,12 +76,13 @@ model Plant {
   id   Int    @id @default(autoincrement())
   name String
 
-  guardians PlantGuardian[]
-  photos    Photo[]
-  tips      Tip[]
+  photos Photo[]
+  tips   Tip[]
 
+  guardId   Int?
+  guard     User?        @relation(fields: [guardId], references: [id], name: "guard")
   userId    Int
-  user      User         @relation(fields: [userId], references: [id])
+  user      User         @relation(fields: [userId], references: [id], name: "owner")
   addressId Int
   address   Address      @relation(fields: [addressId], references: [id])
   statusId  Int
@@ -111,19 +112,6 @@ model PlantSpecies {
   plants Plant[]
 
   @@map("plant_species")
-}
-
-model PlantGuardian {
-  id   Int      @id @default(autoincrement())
-  from DateTime
-  to   DateTime
-
-  plantId Int
-  plant   Plant @relation(fields: [plantId], references: [id])
-  guardId Int?
-  guard   User? @relation(fields: [guardId], references: [id])
-
-  @@map("plant_guardian")
 }
 
 model Photo {

@@ -65,6 +65,30 @@ describe('PlantService', () => {
     });
   });
 
+  describe('fetchAllGuard', () => {
+    it('should list guarded plant', async () => {
+      jest.spyOn(service, 'fetchAllGuard').mockResolvedValue({ data: [plant] });
+
+      expect(service.fetchAllGuard(1)).resolves.toEqual({ data: [plant] });
+    });
+  });
+
+  describe('guard', () => {
+    it('should guard a plant', async () => {
+      jest.spyOn(service, 'guard').mockResolvedValue({ data: plant });
+
+      expect(service.guard(1, 1)).resolves.toEqual({ data: plant });
+    });
+  });
+
+  describe('unguard', () => {
+    it('should unguard a plant', async () => {
+      jest.spyOn(service, 'unguard').mockResolvedValue({ data: plant });
+
+      expect(service.unguard(1, 1)).resolves.toEqual({ data: plant });
+    });
+  });
+
   describe('update', () => {
     it('update plant', () => {
       jest.spyOn(service, 'update').mockResolvedValue({ data: plant });

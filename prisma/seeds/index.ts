@@ -33,7 +33,7 @@ async function load() {
         data: item,
       });
     }
-    
+
     for (const item of address) {
       await prisma.address.create({
         data: item,
@@ -51,7 +51,6 @@ async function load() {
         data: item,
       });
     }
-
   } catch (e) {
     console.error(e);
   } finally {

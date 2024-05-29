@@ -11,6 +11,13 @@ export const plantSelect = {
   status: true,
   species: true,
   address: true,
+  guard: {
+    select: {
+      id: true,
+      email: true,
+      pseudo: true,
+    },
+  },
 };
 
 @Injectable()
@@ -79,6 +86,61 @@ export class PlantService {
     });
 
     return { data: plant };
+  }
+
+  async fetchAllGuard(guardId: number): Promise<PlantsRO> {
+    const plant = await this.prismaService.plant.findMany({
+      where: { guardId },
+      select: plantSelect,
+    });
+
+    return { data: plant };
+  }
+
+  async guard(userId: number, id: number): Promise<PlantRO> {
+    const plant = await this.prismaService.plant.findFirst({
+      where: { id, guardId: null },
+      select: plantSelect,
+    });
+
+    if (!plant) {
+      throw new UnauthorizedException(
+        'This plant is already guarded or does not exist',
+      );
+    }
+
+    const plantUpdated = await this.prismaService.plant.update({
+      where: { id },
+      data: {
+        guard: { connect: { id: userId } },
+      },
+      select: plantSelect,
+    });
+
+    return { data: plantUpdated };
+  }
+
+  async unguard(userId: number, id: number): Promise<PlantRO> {
+    const plant = await this.prismaService.plant.findFirst({
+      where: { id, guardId: userId },
+      select: plantSelect,
+    });
+
+    if (!plant) {
+      throw new UnauthorizedException(
+        'This plant is already unguarded or does not exist',
+      );
+    }
+
+    const plantUpdated = await this.prismaService.plant.update({
+      where: { id },
+      data: {
+        guardId: null,
+      },
+      select: plantSelect,
+    });
+
+    return { data: plantUpdated };
   }
 
   async delete(userId: number, id: number): Promise<void> {
