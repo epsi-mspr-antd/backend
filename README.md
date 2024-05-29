@@ -1,5 +1,3 @@
-Voici le fichier `README.md` mis à jour avec les sections supplémentaires pour Docker et les tests :
-
 # 🌸 arosaje
 
 ## 🌟 Description
@@ -59,6 +57,14 @@ npm run start:dev
 ```
 
 Votre application devrait maintenant être en cours d'exécution. Vous pouvez accéder à l'API via `http://localhost:3000`.
+
+## 📜 Documentation API
+
+Ce projet utilise Swagger pour la documentation de l'API. Vous pouvez accéder à la documentation interactive via l'URL suivante :
+
+`http://localhost:3000/swagger`
+
+Swagger vous permet de visualiser et tester les différentes routes disponibles dans l'API.
 
 ## 📦 Conteneurisation avec Docker
 

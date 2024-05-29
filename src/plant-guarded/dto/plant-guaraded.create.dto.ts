@@ -11,3 +11,9 @@ export class CreatePlantGuardedDto {
   @IsNumber()
   plantId: number;
 }
+
+export const createPlantGuardedDtoExample: CreatePlantGuardedDto = {
+  from: new Date(),
+  to: new Date(),
+  plantId: 1,
+};
