@@ -10,10 +10,15 @@ import { PlantStatusModule } from './plant-status/plant-status.module';
 import { PlantModule } from './plant/plant.module';
 import { MeModule } from './me/me.module';
 import { TipModule } from './tip/tip.module';
-import { PlantGuardedModule } from './plant-guarded/plant-guarded.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'static'),
+      serveRoot: '/static',
+    }),
     AuthModule,
     PrismaModule,
     UserModule,
@@ -24,7 +29,6 @@ import { PlantGuardedModule } from './plant-guarded/plant-guarded.module';
     PlantModule,
     MeModule,
     TipModule,
-    PlantGuardedModule,
   ],
   providers: [
     {
