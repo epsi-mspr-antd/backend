@@ -4,10 +4,12 @@ import { CreatePlantDto, UpdatePlantDto } from './dto';
 import { PlantRO, PlantsRO } from './types';
 import { AddressService } from 'src/address/address.service';
 import { getRelationUpdate } from 'src/utils';
+import { PicService } from 'src/pic/pic.service';
 
 export const plantSelect = {
   id: true,
   name: true,
+  image: true,
   status: true,
   species: true,
   address: true,
@@ -25,6 +27,7 @@ export class PlantService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly addressService: AddressService,
+    private readonly picService: PicService,
   ) {}
 
   async findAll(): Promise<PlantsRO> {
@@ -44,12 +47,19 @@ export class PlantService {
     return { data: plants };
   }
 
-  async create(userId: number, dto: CreatePlantDto): Promise<PlantRO> {
+  async create(
+    userId: number,
+    dto: CreatePlantDto,
+    file: Express.Multer.File,
+  ): Promise<PlantRO> {
     await this.addressService.isAddressOwner(userId, dto.addressId);
+
+    const image = file ? await this.picService.create(file) : null;
 
     const plant = await this.prismaService.plant.create({
       data: {
         name: dto.name,
+        image,
         species: { connect: { id: dto.speciesId } },
         status: { connect: { id: dto.statusId } },
         address: { connect: { id: dto.addressId } },
@@ -65,6 +75,7 @@ export class PlantService {
     userId: number,
     id: number,
     dto: UpdatePlantDto,
+    file: Express.Multer.File,
   ): Promise<PlantRO> {
     const { speciesId, statusId, addressId, ...data } = dto;
 
@@ -74,14 +85,29 @@ export class PlantService {
       await this.addressService.isAddressOwner(userId, addressId);
     }
 
+    const updatedData: any = {
+      ...data,
+      species: getRelationUpdate(speciesId),
+      status: getRelationUpdate(statusId),
+      address: getRelationUpdate(addressId),
+    };
+
+    if (file) {
+      const currentPlant = await this.prismaService.plant.findUnique({
+        where: { id: id },
+        select: { image: true },
+      });
+
+      if (currentPlant?.image) {
+        await this.picService.delete(currentPlant.image);
+      }
+
+      updatedData.image = await this.picService.create(file);
+    }
+
     const plant = await this.prismaService.plant.update({
       where: { id: id },
-      data: {
-        species: getRelationUpdate(speciesId),
-        status: getRelationUpdate(statusId),
-        address: getRelationUpdate(addressId),
-        ...data,
-      },
+      data: updatedData,
       select: plantSelect,
     });
 

@@ -11,10 +11,11 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
   password String
   pseudo   String
+  image    String?
 
   roles       Role[]
   addresses   Address[]
@@ -34,7 +35,7 @@ model Role {
   name String
 
   userId Int
-  user   User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("role")
 }
@@ -44,7 +45,7 @@ model Session {
   token String?
 
   userId Int  @unique
-  user   User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   updatedAt DateTime @updatedAt
 
@@ -64,7 +65,7 @@ model Address {
   plants Plant[]
 
   userId Int
-  user   User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -73,22 +74,22 @@ model Address {
 }
 
 model Plant {
-  id   Int    @id @default(autoincrement())
-  name String
+  id    Int     @id @default(autoincrement())
+  name  String
+  image String?
 
-  photos Photo[]
-  tips   Tip[]
+  tips Tip[]
 
   guardId   Int?
-  guard     User?        @relation(fields: [guardId], references: [id], name: "guard")
+  guard     User?        @relation(fields: [guardId], references: [id], name: "guard", onDelete: Cascade)
   userId    Int
-  user      User         @relation(fields: [userId], references: [id], name: "owner")
+  user      User         @relation(fields: [userId], references: [id], name: "owner", onDelete: Cascade)
   addressId Int
-  address   Address      @relation(fields: [addressId], references: [id])
+  address   Address      @relation(fields: [addressId], references: [id], onDelete: Cascade)
   statusId  Int
-  status    PlantStatus  @relation(fields: [statusId], references: [id])
+  status    PlantStatus  @relation(fields: [statusId], references: [id], onDelete: Cascade)
   speciesId Int
-  species   PlantSpecies @relation(fields: [speciesId], references: [id])
+  species   PlantSpecies @relation(fields: [speciesId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -114,26 +115,15 @@ model PlantSpecies {
   @@map("plant_species")
 }
 
-model Photo {
-  id  Int    @id @default(autoincrement())
-  url String
-
-  plantId Int
-  plant   Plant @relation(fields: [plantId], references: [id])
-
-  createdAt DateTime @default(now())
-
-  @@map("photo")
-}
-
 model Tip {
-  id          Int    @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   description String
+  image       String?
 
   userId  Int
-  user    User  @relation(fields: [userId], references: [id])
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   plantId Int
-  plant   Plant @relation(fields: [plantId], references: [id])
+  plant   Plant @relation(fields: [plantId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

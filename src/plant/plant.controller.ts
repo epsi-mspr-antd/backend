@@ -7,6 +7,8 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { PlantService } from './plant.service';
 import { GetCurrentUserId, Permissions } from 'src/auth/common/decorators';
@@ -25,6 +27,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Roles } from 'src/user/types';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('plants')
 @Controller('plants')
@@ -73,11 +76,13 @@ export class PlantController {
     },
   })
   @ApiBearerAuth()
+  @UseInterceptors(FileInterceptor('pic'))
   async create(
     @GetCurrentUserId() userId: number,
     @Body() dto: CreatePlantDto,
+    @UploadedFile() file: Express.Multer.File,
   ): Promise<PlantRO> {
-    return await this.plantService.create(userId, dto);
+    return await this.plantService.create(userId, dto, file);
   }
 
   @Patch(':id')
@@ -100,12 +105,14 @@ export class PlantController {
     },
   })
   @ApiBearerAuth()
+  @UseInterceptors(FileInterceptor('pic'))
   async update(
     @GetCurrentUserId() userId: number,
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdatePlantDto,
+    @UploadedFile() file: Express.Multer.File,
   ): Promise<PlantRO> {
-    return await this.plantService.update(userId, id, dto);
+    return await this.plantService.update(userId, id, dto, file);
   }
 
   @Get('guard/:id')

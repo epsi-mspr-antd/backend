@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PlantService } from './plant.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AddressService } from 'src/address/address.service';
+import { PicService } from 'src/pic/pic.service';
 
 describe('PlantService', () => {
   let service: PlantService;
@@ -21,7 +22,7 @@ describe('PlantService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PlantService, PrismaService, AddressService],
+      providers: [PlantService, PrismaService, AddressService, PicService],
     }).compile();
 
     service = module.get<PlantService>(PlantService);
@@ -55,12 +56,16 @@ describe('PlantService', () => {
     it('create plant', () => {
       jest.spyOn(service, 'create').mockResolvedValue({ data: plant });
       expect(
-        service.create(1, {
-          name: 'Je suis une plante',
-          speciesId: 1,
-          statusId: 1,
-          addressId: 1,
-        }),
+        service.create(
+          1,
+          {
+            name: 'Je suis une plante',
+            speciesId: 1,
+            statusId: 1,
+            addressId: 1,
+          },
+          null,
+        ),
       ).resolves.toEqual({ data: plant });
     });
   });
@@ -92,7 +97,7 @@ describe('PlantService', () => {
   describe('update', () => {
     it('update plant', () => {
       jest.spyOn(service, 'update').mockResolvedValue({ data: plant });
-      expect(service.update(1, 1, {})).resolves.toEqual({ data: plant });
+      expect(service.update(1, 1, {}, null)).resolves.toEqual({ data: plant });
     });
   });
 

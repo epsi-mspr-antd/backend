@@ -8,19 +8,18 @@ describe('TipController', () => {
 
   const tip = {
     id: 1,
-    description: 'C\'est un super tip pour votre plante',
+    description: "C'est un super tip pour votre plante",
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   };
 
   const tipRO = {
-    data: tip
+    data: tip,
   };
 
   const tipsRO = {
-    data: [tip]
+    data: [tip],
   };
-
 
   const mockTipService = {
     findPlantTips: jest.fn(),
@@ -48,10 +47,8 @@ describe('TipController', () => {
   });
 
   describe('findPlantTips', () => {
-    it('should return an array of  plant\'s tips', async () => {
-      jest
-        .spyOn(controller, 'findPlantTips')
-        .mockResolvedValue(tipsRO);
+    it("should return an array of  plant's tips", async () => {
+      jest.spyOn(controller, 'findPlantTips').mockResolvedValue(tipsRO);
 
       expect(controller.findPlantTips(1)).resolves.toEqual({ data: [tip] });
     });
@@ -61,24 +58,26 @@ describe('TipController', () => {
     it('should create and return a tip', async () => {
       const createTipDto: CreateTipDto = {
         description: 'Un nouveau tip pour votre plante',
-        plantId: 1
+        plantId: 1,
       };
 
       jest.spyOn(controller, 'create').mockResolvedValue(tipRO);
 
-      expect(controller.create(1, createTipDto)).resolves.toEqual({ data: tip });
+      expect(controller.create(1, createTipDto, null)).resolves.toEqual({
+        data: tip,
+      });
     });
   });
 
   describe('update', () => {
     it('should update and return a tip', async () => {
       const updateTipDto: UpdateTipDto = {
-        description:  'Nouvelle description'
+        description: 'Nouvelle description',
       };
 
       jest.spyOn(controller, 'update').mockResolvedValue(tipRO);
 
-      expect(controller.update(1, 1, updateTipDto)).resolves.toEqual({
+      expect(controller.update(1, 1, updateTipDto, null)).resolves.toEqual({
         data: tip,
       });
     });

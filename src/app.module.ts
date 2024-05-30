@@ -12,11 +12,12 @@ import { MeModule } from './me/me.module';
 import { TipModule } from './tip/tip.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { PicModule } from './pic/pic.module';
 
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'static'),
+      rootPath: join(__dirname, '../..', 'static'),
       serveRoot: '/static',
     }),
     AuthModule,
@@ -29,6 +30,7 @@ import { join } from 'path';
     PlantModule,
     MeModule,
     TipModule,
+    PicModule,
   ],
   providers: [
     {

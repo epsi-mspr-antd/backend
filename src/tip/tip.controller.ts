@@ -7,6 +7,8 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { TipService } from './tip.service';
 import { GetCurrentUserId, Permissions } from 'src/auth/common/decorators';
@@ -25,6 +27,7 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('tips')
 @Controller('tips')
@@ -62,11 +65,13 @@ export class TipController {
     },
   })
   @ApiBearerAuth()
+  @UseInterceptors(FileInterceptor('pic'))
   async create(
     @GetCurrentUserId() userId: number,
     @Body() dto: CreateTipDto,
+    @UploadedFile() file: Express.Multer.File,
   ): Promise<TipRO> {
-    return await this.tipService.create(userId, dto);
+    return await this.tipService.create(userId, dto, file);
   }
 
   @Permissions(Roles.Botanist)
@@ -85,12 +90,14 @@ export class TipController {
     },
   })
   @ApiBearerAuth()
+  @UseInterceptors(FileInterceptor('pic'))
   async update(
     @GetCurrentUserId() userId: number,
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateTipDto,
+    @UploadedFile() file: Express.Multer.File,
   ): Promise<TipRO> {
-    return await this.tipService.update(userId, id, dto);
+    return await this.tipService.update(userId, id, dto, file);
   }
 
   @Permissions(Roles.Botanist)

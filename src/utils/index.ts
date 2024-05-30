@@ -9,3 +9,7 @@ export function getRelationUpdate(
 ): RelationShip | undefined {
   return id ? { connect: { id } } : undefined;
 }
+
+export function transformToInt(value: any) {
+  return typeof value === 'string' ? parseFloat(value) : value;
+}
