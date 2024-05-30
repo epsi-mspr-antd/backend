@@ -68,7 +68,7 @@ describe('PlantController', () => {
 
       jest.spyOn(controller, 'create').mockResolvedValue({ data: plant });
 
-      expect(controller.create(1, createPlantDto)).resolves.toEqual({
+      expect(controller.create(1, createPlantDto, null)).resolves.toEqual({
         data: plant,
       });
     });
@@ -110,7 +110,7 @@ describe('PlantController', () => {
 
       jest.spyOn(controller, 'update').mockResolvedValue({ data: plant });
 
-      expect(controller.update(1, 1, updatePlantDto)).resolves.toEqual({
+      expect(controller.update(1, 1, updatePlantDto, null)).resolves.toEqual({
         data: plant,
       });
     });

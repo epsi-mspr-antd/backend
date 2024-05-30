@@ -1,4 +1,6 @@
+import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { transformToInt } from 'src/utils';
 
 export class CreateTipDto {
   @IsNotEmpty()
@@ -7,6 +9,7 @@ export class CreateTipDto {
 
   @IsNotEmpty()
   @IsNumber()
+  @Transform(({ value }) => transformToInt(value))
   plantId: number;
 }
 

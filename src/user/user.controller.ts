@@ -5,6 +5,7 @@ import {
   Patch,
   Get,
   ParseIntPipe,
+  Delete,
 } from '@nestjs/common';
 import { GetCurrentUserId } from 'src/auth/common/decorators';
 import { UserService } from './user.service';
@@ -76,8 +77,8 @@ export class UserController {
     return this.userService.update(userId, id, dto);
   }
 
-  // @Delete(':id')
-  // delete(@GetCurrentUserId() userId: number, @Param('id') paramId: string) {
-  //   return this.userService.delete(+paramId, userId);
-  // }
+  @Delete(':id')
+  delete(@GetCurrentUserId() userId: number, @Param('id') paramId: string) {
+    return this.userService.delete(+paramId, userId);
+  }
 }
