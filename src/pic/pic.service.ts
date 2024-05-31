@@ -13,24 +13,24 @@ export class PicService {
       throw new ImATeapotException('File not uploaded');
     }
 
-    const uniqueFilename = `${uuidv4()}${path.extname(file.originalname)}`;
-    const uploadPath = path.join(
-      __dirname,
-      '../../..',
-      'static',
-      uniqueFilename,
-    );
+    const filename = `${uuidv4()}${path.extname(file.originalname)}`;
 
-    fs.writeFileSync(uploadPath, file.buffer);
+    fs.writeFileSync(path.join(this.getUploadPath(), filename), file.buffer);
 
-    return uniqueFilename;
+    return filename;
   }
 
   async delete(filename: string): Promise<void> {
-    const filePath = path.join(__dirname, '../../..', 'static', filename);
+    const filePath = path.join(this.getUploadPath(), filename);
 
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
     }
+  }
+
+  private getUploadPath(): string {
+    return process.env.NODE_ENV === 'production'
+      ? '/app/static'
+      : path.join(__dirname, '../../..', 'static');
   }
 }
