@@ -29,8 +29,6 @@ export class PicService {
   }
 
   private getUploadPath(): string {
-    return process.env.NODE_ENV === 'production'
-      ? '/app/static'
-      : path.join(__dirname, '../../..', 'static');
+    return path.join(__dirname, '../../..', 'static');
   }
 }
