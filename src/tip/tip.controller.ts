@@ -49,7 +49,7 @@ export class TipController {
     return await this.tipService.findPlantTips(id);
   }
 
-  @Permissions(Roles.Botanist)
+  // @Permissions(Roles.Botanist)
   @Post()
   @ApiOperation({
     summary: 'Create a tip',
@@ -74,7 +74,7 @@ export class TipController {
     return await this.tipService.create(userId, dto, file);
   }
 
-  @Permissions(Roles.Botanist)
+  // @Permissions(Roles.Botanist)
   @Patch(':id')
   @ApiOperation({
     summary: 'Update a tip',
@@ -100,7 +100,7 @@ export class TipController {
     return await this.tipService.update(userId, id, dto, file);
   }
 
-  @Permissions(Roles.Botanist)
+  // @Permissions(Roles.Botanist)
   @Delete(':id')
   @ApiOperation({
     summary: 'Delete a tip',

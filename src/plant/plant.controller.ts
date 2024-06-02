@@ -127,7 +127,7 @@ export class PlantController {
     return await this.plantService.fetchAllGuard(id);
   }
 
-  @Permissions(Roles.Gardian)
+  // @Permissions(Roles.Gardian)
   @Patch('guard/:id')
   @ApiOperation({
     summary: 'Guard a plant',
@@ -146,7 +146,7 @@ export class PlantController {
     return await this.plantService.guard(userId, id);
   }
 
-  @Permissions(Roles.Gardian)
+  // @Permissions(Roles.Gardian)
   @Patch('unguard/:id')
   @ApiOperation({
     summary: 'Unguard a plant',
