@@ -47,6 +47,14 @@ describe('PlantController', () => {
     });
   });
 
+  describe('findOne', () => {
+    it('should return a plant', async () => {
+      jest.spyOn(controller, 'findOne').mockResolvedValue({ data: plant });
+
+      expect(controller.findOne(1)).resolves.toEqual({ data: plant });
+    });
+  });
+
   describe('findUserPlants', () => {
     it('should return an array of user plants', async () => {
       jest

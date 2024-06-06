@@ -61,6 +61,21 @@ export class PlantController {
     return await this.plantService.findUserPlants(id);
   }
 
+  @Get(':id')
+  @ApiOperation({
+    summary: 'Get plant by ID',
+    description: 'Get a plant by its ID',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID of the plant',
+    type: Number,
+  })
+  @ApiBearerAuth()
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<PlantRO> {
+    return await this.plantService.findOne(id);
+  }
+
   @Post()
   @ApiOperation({
     summary: 'Create a plant',

@@ -49,6 +49,21 @@ export class TipController {
     return await this.tipService.findPlantTips(id);
   }
 
+  @Get(':id')
+  @ApiOperation({
+    summary: 'Get a tip',
+    description: 'Get a tip by its ID.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID of the tip',
+    type: Number,
+  })
+  @ApiBearerAuth()
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<TipRO> {
+    return await this.tipService.findOne(id);
+  }
+
   // @Permissions(Roles.Botanist)
   @Post()
   @ApiOperation({

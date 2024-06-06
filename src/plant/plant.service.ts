@@ -38,6 +38,15 @@ export class PlantService {
     return { data: plants };
   }
 
+  async findOne(plantId: number): Promise<PlantRO> {
+    const plant = await this.prismaService.plant.findFirst({
+      where: { id: plantId },
+      select: plantSelect,
+    });
+
+    return { data: plant };
+  }
+
   async findUserPlants(userId: number): Promise<PlantsRO> {
     const plants = await this.prismaService.plant.findMany({
       where: { userId },
