@@ -34,14 +34,36 @@ describe('tips (e2e)', () => {
     });
   });
 
+  describe('findOne', () => {
+    it('should succeed', () => {
+      return request(app.getHttpServer())
+        .get('/tips/1')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .expect(200)
+        .expect((response) => {
+          expect(response.body).toHaveProperty('data');
+        });
+    });
+
+    it('should error', () => {
+      return request(app.getHttpServer())
+        .get('/tips/test')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .expect(400)
+        .expect((response) => {
+          expect(response.body).toHaveProperty('error');
+        });
+    });
+  });
+
   describe('create', () => {
     it('should succeed', () => {
       return request(app.getHttpServer())
         .post('/tips')
         .set('Authorization', `Bearer ${accessToken}`)
         .send({
-            description: 'Un nouveau tip pour votre plante',
-            plantId: 1
+          description: 'Un nouveau tip pour votre plante',
+          plantId: 1,
         })
         .expect(201)
         .expect((response) => {
@@ -54,8 +76,8 @@ describe('tips (e2e)', () => {
         .post('/tips')
         .set('Authorization', `Bearer ${accessToken}`)
         .send({
-            description: 'Un nouveau tip pour votre plante',
-            plantId: null
+          description: 'Un nouveau tip pour votre plante',
+          plantId: null,
         })
         .expect(400)
         .expect((response) => {
@@ -64,32 +86,32 @@ describe('tips (e2e)', () => {
     });
 
     it('should error', () => {
-        return request(app.getHttpServer())
-          .post('/tips')
-          .set('Authorization', `Bearer ${accessToken}`)
-          .send({
-              description: '',
-              plantId: 1
-          })
-          .expect(400)
-          .expect((response) => {
-            expect(response.body).toHaveProperty('error');
-          });
-      });
+      return request(app.getHttpServer())
+        .post('/tips')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send({
+          description: '',
+          plantId: 1,
+        })
+        .expect(400)
+        .expect((response) => {
+          expect(response.body).toHaveProperty('error');
+        });
+    });
 
     it('should error', () => {
-        return request(app.getHttpServer())
-          .post('/tips')
-          .set('Authorization', `Bearer ${accessToken}`)
-          .send({
-              description: '',
-              plantId: null
-          })
-          .expect(400)
-          .expect((response) => {
-            expect(response.body).toHaveProperty('error');
-          });
-      });
+      return request(app.getHttpServer())
+        .post('/tips')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send({
+          description: '',
+          plantId: null,
+        })
+        .expect(400)
+        .expect((response) => {
+          expect(response.body).toHaveProperty('error');
+        });
+    });
   });
 
   describe('update', () => {

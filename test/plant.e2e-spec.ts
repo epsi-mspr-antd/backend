@@ -35,6 +35,28 @@ describe('Plants (e2e)', () => {
     });
   });
 
+  describe('findOne', () => {
+    it('should succeed', () => {
+      return request(app.getHttpServer())
+        .get('/plants/1')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .expect(200)
+        .expect((response) => {
+          expect(response.body).toHaveProperty('data');
+        });
+    });
+
+    it('should error', () => {
+      return request(app.getHttpServer())
+        .get('/plants/test')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .expect(400)
+        .expect((response) => {
+          expect(response.body).toHaveProperty('error');
+        });
+    });
+  });
+
   describe('findUserPlants', () => {
     it('should succeed', () => {
       return request(app.getHttpServer())

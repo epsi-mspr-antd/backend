@@ -23,6 +23,19 @@ export class TipService {
     private readonly picService: PicService,
   ) {}
 
+  async findOne(tipId: number): Promise<TipRO> {
+    const plant = await this.prismaService.tip.findFirst({
+      where: { id: tipId },
+      select: tipSelect,
+    });
+
+    return {
+      data: {
+        ...plant,
+      },
+    };
+  }
+
   async findPlantTips(plantId: number): Promise<TipsRO> {
     const plants = await this.prismaService.tip.findMany({
       where: { plantId },

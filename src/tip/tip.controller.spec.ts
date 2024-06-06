@@ -46,6 +46,14 @@ describe('TipController', () => {
     expect(controller).toBeDefined();
   });
 
+  describe('findOne', () => {
+    it('should return a tip', async () => {
+      jest.spyOn(controller, 'findOne').mockResolvedValue({ data: tip });
+
+      expect(controller.findOne(1)).resolves.toEqual({ data: tip });
+    });
+  });
+
   describe('findPlantTips', () => {
     it("should return an array of  plant's tips", async () => {
       jest.spyOn(controller, 'findPlantTips').mockResolvedValue(tipsRO);

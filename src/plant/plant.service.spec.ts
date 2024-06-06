@@ -41,6 +41,14 @@ describe('PlantService', () => {
     });
   });
 
+  describe('findOne', () => {
+    it('should return a plant', async () => {
+      jest.spyOn(service, 'findOne').mockResolvedValue({ data: plant });
+
+      expect(service.findOne(1)).resolves.toEqual({ data: plant });
+    });
+  });
+
   describe('findUserPlants', () => {
     it('get all user plants', () => {
       jest

@@ -53,6 +53,14 @@ describe('TipService', () => {
     });
   });
 
+  describe('findOne', () => {
+    it('should return a tip', async () => {
+      jest.spyOn(service, 'findOne').mockResolvedValue({ data: tip });
+
+      expect(service.findOne(1)).resolves.toEqual({ data: tip });
+    });
+  });
+
   describe('create', () => {
     it('create tip', () => {
       jest.spyOn(service, 'create').mockResolvedValue(tipRO);
