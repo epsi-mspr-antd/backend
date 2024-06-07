@@ -13,6 +13,13 @@ export const plantSelect = {
   status: true,
   species: true,
   address: true,
+  user: {
+    select: {
+      id: true,
+      email: true,
+      pseudo: true,
+    },
+  },
   guard: {
     select: {
       id: true,
