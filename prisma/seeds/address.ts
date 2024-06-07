@@ -60,7 +60,7 @@ export const address = [
     latitude: 43.6047,
     user: {
       connect: {
-        id: 4,
+        id: 1,
       },
     },
   },
