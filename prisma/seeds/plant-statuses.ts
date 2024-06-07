@@ -7,4 +7,7 @@ export const plantStatuses = [
   { name: 'Malade' },
   { name: 'Parasité' },
   { name: 'Mort' },
+  { name: 'Desséché' },
+  { name: 'Inconnu' },
+  { name: 'Noyé' },
 ];
