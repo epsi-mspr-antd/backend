@@ -35,7 +35,7 @@ npm install
 1. Copiez le fichier `.env.dist` vers `.env` :
 
    ```bash
-   cp .env.dis .env
+   cp .env.dist .env
    ```
 
 2. Modifiez le fichier `.env` avec les valeurs appropriées.
