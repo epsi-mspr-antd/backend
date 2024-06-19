@@ -58,6 +58,31 @@ npm run start:dev
 
 Votre application devrait maintenant être en cours d'exécution. Vous pouvez accéder à l'API via `http://localhost:3000`.
 
+## 🌐 Déploiement avec Docker
+
+Pour déployer l'application sur un serveur distant, assurez-vous d'avoir Docker et Docker Compose installés sur le serveur. Suivez les étapes ci-dessous :
+
+1. Connectez-vous à votre serveur distant.
+
+2. Créez un répertoire pour votre application et accédez-y :
+
+   ```bash
+   mkdir arosaje-backend
+   cd arosaje-backend
+   ```
+
+3. Copiez le fichier `.env.prod` vers `.env` et le configurer.
+
+4. Copier la bdd dans le dossier `./data` et `docker-compose.yml`
+
+5. Lancer Docker Compose :
+
+   ```bash
+   docker-compose up -d
+   ```
+
+Votre application sera désormais déployée et accessible via l'adresse IP de votre serveur.
+
 ## 📜 Documentation API
 
 Ce projet utilise Swagger pour la documentation de l'API. Vous pouvez accéder à la documentation interactive via l'URL suivante :
